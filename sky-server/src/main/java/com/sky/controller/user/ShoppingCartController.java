@@ -20,29 +20,38 @@ public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
+
     /**
      * 添加购物车
-     * */
+     */
     @PostMapping("/add")
     @ApiOperation("添加购物车")
-    public Result add(@RequestBody ShoppingCartDTO shoppingCartDTO){
-        log.info("添加购物车，信息为：{}",shoppingCartDTO);
+    public Result add(@RequestBody ShoppingCartDTO shoppingCartDTO) {
+        log.info("添加购物车，信息为：{}", shoppingCartDTO);
         shoppingCartService.addShoppingCart(shoppingCartDTO);
-        return  Result.success();
+        return Result.success();
     }
 
     @GetMapping("/list")
     @ApiOperation("查看购物车")
-    public Result<List<ShoppingCart>> list(){
+    public Result<List<ShoppingCart>> list() {
         log.info("查看购物车");
         return Result.success(shoppingCartService.showShoppingCart());
     }
 
     @PostMapping("/sub")
     @ApiOperation("删除单个菜品")
-    public Result sub(@RequestBody ShoppingCartDTO shoppingCartDTO){
+    public Result sub(@RequestBody ShoppingCartDTO shoppingCartDTO) {
         log.info("删除单个菜品");
         shoppingCartService.delete(shoppingCartDTO);
+        return Result.success();
+    }
+
+    @DeleteMapping("/clean")
+    @ApiOperation("清空购物车")
+    public Result clean() {
+        log.info("清空购物车");
+        shoppingCartService.clean();
         return Result.success();
     }
 }

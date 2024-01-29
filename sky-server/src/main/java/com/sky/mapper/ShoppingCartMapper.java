@@ -3,6 +3,7 @@ package com.sky.mapper;
 import com.sky.entity.ShoppingCart;
 import com.sky.entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
@@ -23,4 +24,7 @@ public interface ShoppingCartMapper {
 
 
     void delete(ShoppingCart shoppingCart);
+
+    @Delete("delete from shopping_cart where user_id = #{userId}")
+    void clean(ShoppingCart shoppingCart);
 }

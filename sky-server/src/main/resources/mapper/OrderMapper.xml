@@ -45,4 +45,29 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="pageQuery" resultType="com.sky.entity.Orders">
+        select * from orders
+        <where>
+            <if test="userId !=null">
+                and user_id = #{userId}
+            </if>
+            <if test="number !=null">
+                and number = #{number}
+            </if>
+            <if test="phone !=null">
+                and phone = #{phone}
+            </if>
+            <if test="status !=null">
+                and status = #{status}
+            </if>
+            <if test="beginTime!=null">
+                and order_time <![CDATA[>=]]>#{beginTime}
+            </if>
+            <if test="endTime!=null">
+                and order_time <![CDATA[<=]]>#{endTime}
+            </if>
+        </where>
+        order by estimated_delivery_time desc
+    </select>
 </mapper>

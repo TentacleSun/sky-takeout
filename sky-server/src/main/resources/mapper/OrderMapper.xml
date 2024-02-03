@@ -70,4 +70,5 @@
         </where>
         order by estimated_delivery_time desc
     </select>
+
 </mapper>

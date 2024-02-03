@@ -76,7 +76,7 @@ public class OrderController {
     @PutMapping("/cancel/{id}")
     @ApiOperation("取消订单")
     public Result cancel(@PathVariable Long id){
-        log.info("根据订单id返回详情");
+        log.info("根据订单id取消订单");
         OrdersCancelDTO ordersCancelDTO = new OrdersCancelDTO();
         ordersCancelDTO.setId(id);
         orderService.cancel(ordersCancelDTO);

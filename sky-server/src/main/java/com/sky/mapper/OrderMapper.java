@@ -11,6 +11,9 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.core.annotation.Order;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
     /**
@@ -46,5 +49,10 @@ public interface OrderMapper {
     @Update("update Orders set status = 6,cancel_reason = #{cancelReason} where id = #{id}")
     void cancel(OrdersCancelDTO ordersCancelDTO);
 
-    OrderStatisticsVO statistics();
+    @Select("select count(*) from orders where status = #{status}")
+    Integer statistics(Integer status);
+
+
+    @Select("select * from orders where #{status} = status and order_time< #{orderTime}")
+    List<Orders> getByStatusAndOrderTimeLt(Integer status, LocalDateTime orderTime);
 }

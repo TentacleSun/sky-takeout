@@ -21,6 +21,7 @@ import com.sky.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -233,12 +234,37 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void  cancel(OrdersCancelDTO ordersCancelDTO){
+        Orders orders = new Orders();
+        BeanUtils.copyProperties(ordersCancelDTO,orders);
 
         orderMapper.cancel(ordersCancelDTO);
     }
     @Override
     public OrderStatisticsVO statistics(){
-        OrderStatisticsVO orderStatisticsVO = orderMapper.statistics();
+        Integer toBeConfirmed= orderMapper.statistics(2);
+        Integer confirmed= orderMapper.statistics(3);
+        Integer deliveryInProgress= orderMapper.statistics(4);
+        OrderStatisticsVO orderStatisticsVO = new OrderStatisticsVO();
+        orderStatisticsVO.setConfirmed(confirmed);
+        orderStatisticsVO.setToBeConfirmed(toBeConfirmed);
+        orderStatisticsVO.setDeliveryInProgress(deliveryInProgress);
         return orderStatisticsVO;
+    }
+
+    @Override
+    public void confirm(Long id){
+        Orders orders = Orders.builder().id(id).status(Orders.CONFIRMED).build();
+        orderMapper.update(orders);
+    }
+
+    @Override
+    public void delivery(Long id){
+        Orders orders = Orders.builder().id(id).status(Orders.DELIVERY_IN_PROGRESS).build();
+        orderMapper.update(orders);
+    }
+    @Override
+    public void complete(Long id){
+        Orders orders = Orders.builder().id(id).status(Orders.COMPLETED).build();
+        orderMapper.update(orders);
     }
 }

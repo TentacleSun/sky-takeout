@@ -1,11 +1,14 @@
 package com.sky.controller.admin;
 
 import com.sky.dto.OrdersCancelDTO;
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderStatisticsVO;
+import com.sky.vo.OrderSubmitVO;
+import com.sky.vo.OrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +47,46 @@ public class OrderController {
         OrderStatisticsVO orderStatisticsVO = orderService.statistics();
 
         return Result.success(orderStatisticsVO);
+    }
+
+    @PutMapping("/confirm")
+    @ApiOperation("接单")
+    public Result confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO){
+        log.info("根据订单id接单：{}",ordersConfirmDTO);
+        orderService.confirm(ordersConfirmDTO.getId());
+        return Result.success();
+    }
+    @GetMapping("/details/{id}")
+    @ApiOperation("查询订单详情")
+    public Result<OrderVO> details(@PathVariable Long id){
+        log.info("查询订单详情：{}",id);
+        OrderVO orderVO = orderService.orderDeatil(id);
+        return Result.success(orderVO);
+    }
+
+    @PutMapping("/delivery/{id}")
+    @ApiOperation("派送")
+    public Result delivery(@PathVariable Long id){
+        log.info("根据订单id派送：{}",id);
+        orderService.delivery(id);
+        return Result.success();
+    }
+
+    @PutMapping("/complete/{id}")
+    @ApiOperation("完成")
+    public Result complete(@PathVariable Long id){
+        log.info("根据订单id派送：{}",id);
+        orderService.complete(id);
+        return Result.success();
+    }
+
+    @PutMapping("/rejection")
+    @ApiOperation("拒单")
+    public Result rejection(@RequestBody OrdersCancelDTO ordersCancelDTO){
+        log.info("根据订单id取消订单");
+        orderService.cancel(ordersCancelDTO);
+
+        return Result.success();
     }
 
 }

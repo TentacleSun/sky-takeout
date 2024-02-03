@@ -36,4 +36,10 @@ public interface OrderService {
     void cancel(OrdersCancelDTO ordersCancelDTO);
 
     OrderStatisticsVO statistics();
+
+    void confirm(Long id);
+
+    void delivery(Long id);
+
+    void complete(Long id);
 }

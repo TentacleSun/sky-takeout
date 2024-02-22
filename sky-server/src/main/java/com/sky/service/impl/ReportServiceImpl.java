@@ -148,8 +148,9 @@ public class ReportServiceImpl implements ReportService {
 
         //获得所有在此区间的订单详情
 
+
         if(ordersList==null|| ordersList.isEmpty()){
-            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+            return SalesTop10ReportVO.builder().build();
         }
 
         HashMap hashMap = new HashMap();
@@ -172,7 +173,7 @@ public class ReportServiceImpl implements ReportService {
 
 
         //取出内容
-        List<Map.Entry<String, Integer>> result = list.subList(0,9);
+        List<Map.Entry<String, Integer>> result = list.size()>=10? list.subList(0,9) :list;
         List names = new ArrayList(), times = new ArrayList<>();
         for(Map.Entry<String, Integer> salesMap : result){
             names.add(salesMap.getKey());

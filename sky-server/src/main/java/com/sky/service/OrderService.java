@@ -4,6 +4,7 @@ import com.sky.dto.OrdersCancelDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
+import com.sky.entity.AddressBook;
 import com.sky.result.PageResult;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
@@ -44,4 +45,6 @@ public interface OrderService {
     void complete(Long id);
 
     void reminder(Long id);
+
+    boolean addressValidation(AddressBook addressBook) throws Exception;
 }

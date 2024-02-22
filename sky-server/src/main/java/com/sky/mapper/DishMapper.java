@@ -93,4 +93,5 @@ public interface DishMapper {
     @AutoFill(value = OperationType.UPDATE)
     @Update("update dish set status = #{status} where id = #{id}")
     void startOrStop(Integer status,Long id);
+
 }

@@ -26,4 +26,8 @@ public class MessageConstant {
 
     public static final String ACCOUNT_EXIST = "账号已存在";
 
+    public static final String USER_IS_TOO_LONG = "用户距离超过5公里不允许下单";
+
+    public static final String ERROR_FROM_BAIDUMAP = "=百度地图服务器错误";
+
 }
